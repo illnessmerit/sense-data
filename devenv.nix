@@ -48,6 +48,10 @@
   # https://devenv.sh/git-hooks/
   # git-hooks.hooks.shellcheck.enable = true;
   git-hooks.hooks = {
+    prettier = {
+      enable = true;
+      excludes = [ "\\.json$" ];
+    };
     nixfmt.enable = true;
   };
 
