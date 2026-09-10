@@ -48,11 +48,13 @@
   # https://devenv.sh/git-hooks/
   # git-hooks.hooks.shellcheck.enable = true;
   git-hooks.hooks = {
+    end-of-file-fixer.enable = true;
+    nixfmt.enable = true;
     prettier = {
       enable = true;
       excludes = [ "\\.json$" ];
     };
-    nixfmt.enable = true;
+    trim-trailing-whitespace.enable = true;
   };
 
   # See full reference at https://devenv.sh/reference/options/
