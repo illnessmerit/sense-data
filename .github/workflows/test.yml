@@ -1,0 +1,28 @@
+# https://github.com/cachix/devenv/blob/2a399e9ea5e981f225d75b25c8fa8d76f730131d/docs/src/content/docs/integrations/github-actions.md?plain=1#L127-L159
+name: "Test"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        os: [macos-26, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+      - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+        with:
+          name: devenv
+      - name: Install devenv.sh
+        run: nix profile add nixpkgs/8c50a710ddca43d7a530fb805ad55bde8d0141c5#devenv
+
+      - name: Build the devenv shell and run any pre-commit hooks
+        run: devenv test
+
+      - name: Run a single command in the devenv shell
+        run: devenv shell hello
